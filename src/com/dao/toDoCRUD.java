@@ -1,8 +1,7 @@
 package com.dao;
 import java.sql.* ;
 public class toDoCRUD {
-    String sql = "INSERT INTO todo"
-            + "  (id, title, description, deadline, priority, done) VALUES " + " (?, ?, ?, ?, ? ,?);";
+
 
     private static  Connection connection ;
     private static PreparedStatement ps ;
@@ -42,6 +41,7 @@ public class toDoCRUD {
             ps.executeUpdate();
 
             System.out.println("Tâche insérée avec succès !");
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -50,10 +50,34 @@ public class toDoCRUD {
     // find TODO
 
 
-    public static toDo findUserById(int id){
+    public static toDo findTodoById(int id){
+        toDo todo = null;
+        try {
+            String sql = "SELECT * FROM todo WHERE id = ?";
+            PreparedStatement ps = getPreparedStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Récupérer les valeurs de la ligne trouvée et créer un objet ToDo
+                int todoId = rs.getInt("id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                Timestamp deadline = rs.getTimestamp("deadline");
+                int priority = rs.getInt("priority");
+                boolean done = rs.getBoolean("done");
+
+                todo = new toDo(todoId, title, description, deadline, priority, done);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return todo;
 
 
 
-       return  null ;
     }
 }
