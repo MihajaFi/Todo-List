@@ -5,7 +5,7 @@ public class toDoCRUD {
             + "  (id, title, description, deadline, priority, done) VALUES " + " (?, ?, ?, ?, ? ,?);";
 
     private static  Connection connection ;
-    private static Statement st ;
+    private static PreparedStatement ps ;
 
     private static Connection getConnection() {
         if (connection == null) {
@@ -16,15 +16,37 @@ public class toDoCRUD {
         return connection;
     }
 
-    private static Statement getStatement() {
-        if (st == null) {
+    private static PreparedStatement getPreparedStatement(String sql) {
+        if (ps == null) {
             try {
                 Connection connection = getConnection();
-                st = connection.createStatement();
+                ps = connection.prepareStatement(sql);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return st;
+        return ps;
     }
+
+
+    public static void inserttoDo(int id, String title, String description, Timestamp deadline , int priority , boolean done){
+        try {
+            String sql = "INSERT INTO todo (id, title, description, deadline, priority, done) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = getPreparedStatement(sql);
+            ps.setInt(1, id);
+            ps.setString(2, title);
+            ps.setString(3, description);
+            ps.setTimestamp(4, deadline);
+            ps.setInt(5, priority);
+            ps.setBoolean(6, done);
+            ps.executeUpdate();
+
+            System.out.println("Tâche insérée avec succès !");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // find TODO
+
 }
