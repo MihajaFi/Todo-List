@@ -66,4 +66,16 @@ private  boolean done ;
     public void setDone(boolean done) {
         this.done = done;
     }
+
+    @Override
+    public String toString() {
+        return "toDo{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", deadline=" + deadline +
+                ", priority=" + priority +
+                ", done=" + done +
+                '}';
+    }
 }

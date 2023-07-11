@@ -1,5 +1,7 @@
 package com.dao;
 import java.sql.* ;
+import java.util.List ;
+import java.util.ArrayList ;
 public class toDoCRUD {
 
 
@@ -27,8 +29,8 @@ public class toDoCRUD {
         return ps;
     }
 
-
-    public static void inserttoDo(int id, String title, String description, Timestamp deadline , int priority , boolean done){
+    // insert TODO in database
+    public static void insertToDo(int id, String title, String description, Timestamp deadline , int priority , boolean done){
         try {
             String sql = "INSERT INTO todo (id, title, description, deadline, priority, done) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = getPreparedStatement(sql);
@@ -48,7 +50,6 @@ public class toDoCRUD {
     }
 
     // find TODO
-
 
     public static toDo findTodoById(int id){
         toDo todo = null;
@@ -80,4 +81,37 @@ public class toDoCRUD {
 
 
     }
+
+    // find all TODO list in database
+
+    public static List<toDo> findAllToDo (){
+
+        List<toDo> todoList = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM todo";
+            PreparedStatement ps = getPreparedStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                Timestamp deadline = rs.getTimestamp("deadline");
+                int priority = rs.getInt("priority");
+                boolean done = rs.getBoolean("done");
+
+                toDo todo = new toDo(id, title, description, deadline, priority, done);
+                todoList.add(todo);
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return todoList;
+}
+
 }
