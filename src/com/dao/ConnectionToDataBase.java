@@ -17,7 +17,7 @@ public class ConnectionToDataBase {
             Connection connection = DriverManager.getConnection(
                     this.url, this.username, this.password
             );
-            System.out.println("reussie");
+
             return connection;
         }catch(SQLException e){
             e.printStackTrace();

@@ -70,9 +70,6 @@ public class toDoCRUD {
 
                 todo = new toDo(todoId, title, description, deadline, priority, done);
             }
-
-            rs.close();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,16 +101,15 @@ public class toDoCRUD {
                 toDo todo = new toDo(id, title, description, deadline, priority, done);
                 todoList.add(todo);
             }
-
-            rs.close();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return todoList;
     }
-    public static void updateTodo (int id, String newTitle, String newDescription, Timestamp newDeadline, int newPriority, boolean newDone){
+
+    //update a TODO list in database
+    public static void updateToDo (int id, String newTitle, String newDescription, Timestamp newDeadline, int newPriority, boolean newDone){
         try {
             String sql = "UPDATE todo SET title = ?, description = ?, deadline = ?, priority = ?, done = ? WHERE id = ?";
             PreparedStatement ps = getPreparedStatement(sql);
@@ -134,4 +130,15 @@ public class toDoCRUD {
         }
     }
 
+    //delete a TODO list in database
+    public static void deleteToDo(int id ){
+        try {
+            String sql = "DELETE FROM todo WHERE id = ?";
+            PreparedStatement ps = getPreparedStatement(sql);
+            ps.setInt(1, id);
+            System.out.println("TODO deleted ");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

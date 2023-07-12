@@ -12,8 +12,9 @@ public class Test {
         // Appel de la méthode à tester
        // toDoCRUD.insertToDo(id, title, description, deadline, priority, done);
       //  System.out.println(toDoCRUD.findTodoById(1));
-     System.out.println(toDoCRUD.findAllToDo());
-       // toDoCRUD.updateTodo(id , title , description , deadline , priority , done);
+    // System.out.println(toDoCRUD.findAllToDo());
+       // toDoCRUD.updateToDo(id , title , description , deadline , priority , done);
+        toDoCRUD.deleteToDo(id);
     }
 
 }
