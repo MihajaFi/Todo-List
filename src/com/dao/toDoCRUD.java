@@ -112,6 +112,26 @@ public class toDoCRUD {
         }
 
         return todoList;
-}
+    }
+    public static void updateTodo (int id, String newTitle, String newDescription, Timestamp newDeadline, int newPriority, boolean newDone){
+        try {
+            String sql = "UPDATE todo SET title = ?, description = ?, deadline = ?, priority = ?, done = ? WHERE id = ?";
+            PreparedStatement ps = getPreparedStatement(sql);
+            ps.setString(1, newTitle);
+            ps.setString(2, newDescription);
+            ps.setTimestamp(3, newDeadline);
+            ps.setInt(4, newPriority);
+            ps.setBoolean(5, newDone);
+            ps.setInt(6, id);
+
+            if (ps.executeUpdate() > 0) {
+                System.out.println("TODO updated successfully");
+            } else {
+                System.out.println("Update not found");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
