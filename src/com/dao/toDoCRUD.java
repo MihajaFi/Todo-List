@@ -136,7 +136,8 @@ public class toDoCRUD {
             String sql = "DELETE FROM todo WHERE id = ?";
             PreparedStatement ps = getPreparedStatement(sql);
             ps.setInt(1, id);
-            System.out.println("TODO deleted ");
+            ps.executeUpdate();
+            System.out.println("TODO deleted");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

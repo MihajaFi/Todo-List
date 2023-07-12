@@ -13,8 +13,8 @@ public class Test {
        // toDoCRUD.insertToDo(id, title, description, deadline, priority, done);
       //  System.out.println(toDoCRUD.findTodoById(1));
     // System.out.println(toDoCRUD.findAllToDo());
-       // toDoCRUD.updateToDo(id , title , description , deadline , priority , done);
-        toDoCRUD.deleteToDo(id);
+        //toDoCRUD.updateToDo(id , title , description , deadline , priority , done);
+       //toDoCRUD.deleteToDo(3);
     }
 
 }
