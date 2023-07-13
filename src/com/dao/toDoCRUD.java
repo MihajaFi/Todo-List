@@ -9,8 +9,9 @@ public class toDoCRUD {
 
 
     private static Connection getConnection() {
+        //singleton de Connection
         if (connection == null) {
-            // Code pour créer la connexion à la base de données
+
             ConnectionToDataBase db = new ConnectionToDataBase();
             connection = db.createConnection();
         }
@@ -103,7 +104,7 @@ public class toDoCRUD {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, newTitle);
             ps.setString(2, newDescription);
-            ps.setObject(3, newDeadline);
+            ps.setObject(3, newDeadline); //pour que deadline peut etre null
             ps.setInt(4, newPriority);
             ps.setBoolean(5, newDone);
             ps.setInt(6, id);
