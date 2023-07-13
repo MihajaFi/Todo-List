@@ -6,7 +6,7 @@ public class toDoCRUD {
 
 
     private static  Connection connection ;
-    private static PreparedStatement ps ;
+
 
     private static Connection getConnection() {
         if (connection == null) {
@@ -17,23 +17,14 @@ public class toDoCRUD {
         return connection;
     }
 
-    private static PreparedStatement getPreparedStatement(String sql) {
-        if (ps == null) {
-            try {
-                Connection connection = getConnection();
-                ps = connection.prepareStatement(sql);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return ps;
-    }
+
 
     // insert TODO in database
-    public static void insertToDo(int id, String title, String description, Timestamp deadline , int priority , boolean done){
+    public static void insertToDo(int id, String title, String description, Timestamp deadline, int priority, boolean done) {
         try {
             String sql = "INSERT INTO todo (id, title, description, deadline, priority, done) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement ps = getPreparedStatement(sql);
+            Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ps.setString(2, title);
             ps.setString(3, description);
@@ -48,14 +39,14 @@ public class toDoCRUD {
             e.printStackTrace();
         }
     }
-
     // find TODO
 
-    public static toDo findTodoById(int id){
+    public static toDo findTodoById(int id) {
         toDo todo = null;
         try {
             String sql = "SELECT * FROM todo WHERE id = ?";
-            PreparedStatement ps = getPreparedStatement(sql);
+            Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -74,20 +65,16 @@ public class toDoCRUD {
             e.printStackTrace();
         }
         return todo;
-
-
-
     }
-
     // find all TODO list in database
 
-    public static List<toDo> findAllToDo (){
-
+    public static List<toDo> findAllToDo() {
         List<toDo> todoList = new ArrayList<>();
 
         try {
             String sql = "SELECT * FROM todo";
-            PreparedStatement ps = getPreparedStatement(sql);
+            Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -109,13 +96,14 @@ public class toDoCRUD {
     }
 
     //update a TODO list in database
-    public static void updateToDo (int id, String newTitle, String newDescription, Timestamp newDeadline, int newPriority, boolean newDone){
+    public static void updateToDo(int id, String newTitle, String newDescription, Timestamp newDeadline, int newPriority, boolean newDone) {
         try {
             String sql = "UPDATE todo SET title = ?, description = ?, deadline = ?, priority = ?, done = ? WHERE id = ?";
-            PreparedStatement ps = getPreparedStatement(sql);
+            Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, newTitle);
             ps.setString(2, newDescription);
-            ps.setTimestamp(3, newDeadline);
+            ps.setObject(3, newDeadline);
             ps.setInt(4, newPriority);
             ps.setBoolean(5, newDone);
             ps.setInt(6, id);
@@ -129,17 +117,16 @@ public class toDoCRUD {
             throw new RuntimeException(e);
         }
     }
-
     //delete a TODO list in database
-    public static void deleteToDo(int id ){
+    public static void deleteToDo(int id) {
         try {
             String sql = "DELETE FROM todo WHERE id = ?";
-            PreparedStatement ps = getPreparedStatement(sql);
+            Connection connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ps.executeUpdate();
             System.out.println("TODO deleted");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-}
+    }}

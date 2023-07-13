@@ -69,13 +69,32 @@ private  boolean done ;
 
     @Override
     public String toString() {
-        return "toDo{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", deadline=" + deadline +
-                ", priority=" + priority +
-                ", done=" + done +
-                '}';
+        String status = done ? "✓" : "✗";
+        String priorityText = getPriorityText();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("ToDo Details:\n");
+        sb.append("ID: ").append(id).append("\n");
+        sb.append("Title: ").append(title).append("\n");
+        sb.append("Description: ").append(description).append("\n");
+        sb.append("Deadline: ").append(deadline).append("\n");
+        sb.append("Priority: ").append(priorityText).append("\n");
+        sb.append("Status: ").append(status).append("\n");
+
+        return sb.toString();
     }
+
+    private String getPriorityText() {
+        switch (priority) {
+            case 1:
+                return "Low";
+            case 5:
+                return "Medium";
+            case 10:
+                return "High";
+            default:
+                return "Unknown";
+        }
+    }
+
 }
