@@ -24,7 +24,7 @@ public class ToDoMenu {
             System.out.println("3. Find all TODO");
             System.out.println("4. Update TODO");
             System.out.println("5. Delete TODO");
-            System.out.println("0. Quitter");
+            System.out.println("6. Quit");
 
             System.out.print("Your choice : ");
             int choice = scanner.nextInt();
@@ -46,7 +46,7 @@ public class ToDoMenu {
                 case 5:
                     deleteTask();
                     break;
-                case 0:
+                case 6:
                     exit = true;
                     System.out.println("Thank you to use the TODO task ");
                     break;
