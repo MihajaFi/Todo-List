@@ -34,7 +34,7 @@ public class toDoCRUD {
             ps.setBoolean(6, done);
             ps.executeUpdate();
 
-            System.out.println("Tâche insérée avec succès !");
+            System.out.println("Task inserted successfully!");
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
