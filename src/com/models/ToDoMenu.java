@@ -28,7 +28,7 @@ public class ToDoMenu {
 
             System.out.print("Your choice : ");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consommer le caractère de nouvelle ligne
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
